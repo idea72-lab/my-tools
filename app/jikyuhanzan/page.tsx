@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Clock, DollarSign, ArrowRight, Calculator, Percent, Scale, Users } from "lucide-react";
+import { Clock, DollarSign, Users, Scale, Percent, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 export default function JikyuHanzanPage() {
-  const [hourlyWage, setHourlyWage] = useState<string>("1150"); // デフォルトの時給（例: 1150円）
-  const [itemPrice, setItemPrice] = useState<string>("5000"); // 商品の価格（例: 5000円）
+  const [hourlyWage, setHourlyWage] = useState<string>("1150"); // デフォルトの時給
+  const [itemPrice, setItemPrice] = useState<string>("5000"); // 商品の価格
 
   const wageNum = parseFloat(hourlyWage) || 0;
   const priceNum = parseFloat(itemPrice) || 0;
@@ -16,9 +16,31 @@ export default function JikyuHanzanPage() {
   const hours = Math.floor(totalHours);
   const minutes = Math.round((totalHours - hours) * 60);
 
+  // Q&Aの開閉状態を管理するアコーディオン用のstate
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const faqs = [
+    {
+      q: "時給換算の計算式はどうなっていますか？",
+      a: "「欲しいものの価格 ÷ あなたの時給」で必要な労働時間の総小数を算出し、それを時間と分に換算しています。",
+    },
+    {
+      q: "端数の分数はどのように処理されますか？",
+      a: "計算された分数は、四捨五入して最も近い分単位で分かりやすく表示されます。",
+    },
+    {
+      q: "入力した時給や価格のデータは保存されますか？",
+      a: "データはすべてお使いのブラウザ内（メモリ上）だけで処理されており、外部のサーバー等に保存されることはありません。",
+    },
+  ];
+
   return (
-    <div className="min-h-dvh bg-muted/40 p-4 md:p-8">
-      <div className="mx-auto max-w-md flex flex-col gap-6">
+    <div className="min-h-dvh bg-muted/40 p-4 md:p-8 flex flex-col justify-between">
+      <div className="mx-auto max-w-md flex flex-col gap-6 w-full">
 
         {/* ツール切替タブナビゲーション */}
         <div className="flex bg-muted p-1 rounded-xl gap-1 border shadow-sm">
@@ -104,8 +126,42 @@ export default function JikyuHanzanPage() {
           </div>
 
         </main>
+
+        {/* よくある質問（Q&A）セクション */}
+        <section className="flex flex-col gap-3 mt-4">
+          <h2 className="text-sm font-bold text-muted-foreground px-1">よくある質問（Q&A）</h2>
+          <div className="flex flex-col gap-2">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-card border rounded-xl overflow-hidden shadow-sm">
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full flex items-center justify-between p-4 text-left text-xs font-medium text-foreground hover:bg-muted/50 transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="text-primary font-bold">Q.</span> {faq.q}
+                  </span>
+                  <ChevronDown className={`size-4 text-muted-foreground transition-transform ${openIndex === index ? "rotate-180" : ""}`} />
+                </button>
+                {openIndex === index && (
+                  <div className="px-4 pb-4 text-xs text-muted-foreground leading-relaxed border-t pt-2 bg-muted/20">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* プライバシーポリシーセクション */}
+        <section className="bg-card border rounded-xl p-4 text-xs text-muted-foreground flex flex-col gap-2 shadow-sm mb-6">
+          <h2 className="font-bold text-foreground">プライバシーポリシー</h2>
+          <p>
+            当サイトでは、第三者配信の広告サービス「Google アドセンス」を利用しています[cite: 9]。
+            広告配信事業者は、ユーザーが当サイトや他のウェブサイトに過去にアクセスした際の情報に基づいてパーソナライズ広告を配信するため、Cookieを使用することがあります[cite: 9]。
+          </p>
+        </section>
+
       </div>
     </div>
   );
 }
- 
