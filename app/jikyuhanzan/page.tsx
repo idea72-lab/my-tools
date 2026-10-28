@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Clock, DollarSign, ArrowRight } from "lucide-react";
+import { Clock, DollarSign, ArrowRight, Calculator, Percent, Scale, Users } from "lucide-react";
+import Link from "next/link";
 
 export default function JikyuHanzanPage() {
   const [hourlyWage, setHourlyWage] = useState<string>("1150"); // デフォルトの時給（例: 1150円）
@@ -18,7 +19,35 @@ export default function JikyuHanzanPage() {
   return (
     <div className="min-h-dvh bg-muted/40 p-4 md:p-8">
       <div className="mx-auto max-w-md flex flex-col gap-6">
-        
+
+        {/* ツール切替タブナビゲーション */}
+        <div className="flex bg-muted p-1 rounded-xl gap-1 border shadow-sm">
+          <Link
+            href="/"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-medium rounded-lg text-muted-foreground hover:bg-background/50 transition-all"
+          >
+            <Users className="size-4" /> 割り勘
+          </Link>
+          <Link
+            href="/tanka"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-medium rounded-lg text-muted-foreground hover:bg-background/50 transition-all"
+          >
+            <Scale className="size-4" /> 単価比較
+          </Link>
+          <Link
+            href="/waribiki"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-medium rounded-lg text-muted-foreground hover:bg-background/50 transition-all"
+          >
+            <Percent className="size-4" /> 割引計算
+          </Link>
+          <Link
+            href="/jikyuhanzan"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-medium rounded-lg bg-background text-foreground shadow-sm transition-all"
+          >
+            <Clock className="size-4" /> 時給換算
+          </Link>
+        </div>
+
         {/* ヘッダー部分 */}
         <header className="flex items-center gap-3">
           <span className="flex size-11 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
@@ -35,7 +64,7 @@ export default function JikyuHanzanPage() {
           
           {/* 時給の入力 */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium flex items-center gap-1.s text-muted-foreground">
+            <label className="text-sm font-medium flex items-center gap-1.5 text-muted-foreground">
               <DollarSign className="size-4" /> あなたの時給（円）
             </label>
             <input
@@ -79,3 +108,4 @@ export default function JikyuHanzanPage() {
     </div>
   );
 }
+ 
