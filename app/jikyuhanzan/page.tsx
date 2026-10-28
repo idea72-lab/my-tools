@@ -40,6 +40,12 @@ export default function JikyuHanzanPage() {
     <div className="min-h-dvh bg-muted/40 p-4 md:p-8 flex flex-col justify-between">
       <div className="mx-auto max-w-md flex flex-col gap-6 w-full">
 
+        {/* スポンサーリンク（最上部） */}
+        <div className="w-full h-24 border border-dashed border-border rounded-xl flex flex-col items-center justify-center bg-muted/20 text-xs text-muted-foreground gap-1">
+          <span>スポンサーリンク</span>
+          <span className="text-[10px] text-muted-foreground/60">広告枠 (320×100)</span>
+        </div>
+
         {/* ツール切替タブナビゲーション */}
         <div className="flex bg-muted p-1 rounded-xl gap-1 border shadow-sm">
           <Link
@@ -226,11 +232,12 @@ export default function JikyuHanzanPage() {
           </form>
         </section>
 
-        {/* フッター＆スポンサーリンク */}
+        {/* コピーライトとスポンサーリンクの順番を他のページと完全に統一 */}
         <footer className="flex flex-col items-center gap-6 mt-2 mb-6">
-          <p className="text-xs text-muted-foreground">© 時給換算ツール</p>
-          <div className="w-full h-32 border border-dashed border-border rounded-xl flex flex-col items-center justify-center bg-muted/20 text-xs text-muted-foreground">
-            スポンサーリンク
+          <p className="text-xs text-muted-foreground">© 割引・セール価格計算ツール</p>
+          <div className="w-full h-32 border border-dashed border-border rounded-xl flex flex-col items-center justify-center bg-muted/20 text-xs text-muted-foreground gap-1">
+            <span>スポンサーリンク</span>
+            <span className="text-[10px] text-muted-foreground/60">広告枠 (320×100)</span>
           </div>
         </footer>
 
