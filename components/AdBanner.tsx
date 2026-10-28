@@ -8,11 +8,11 @@ export default function AdBanner() {
   useEffect(() => {
     if (!bannerRef.current) return;
 
-    // 2重読み込みを防ぐため、中身をクリアしてからスクリプトを追加
     bannerRef.current.innerHTML = '';
 
     const script = document.createElement('script');
-    script.src = 'https://adm.shinobi.jp/s/7bf44053964a569b80e38e197b57a0af';
+    // ↓ ここを新しく発行されたURLに変更
+    script.src = 'https://adsm.shinobi.jp/s/bfaae45a01ed35ae7afaa98553ddca14';
     script.async = true;
 
     bannerRef.current.appendChild(script);
