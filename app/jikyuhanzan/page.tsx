@@ -1,22 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Clock, DollarSign, Users, Scale, Percent, ChevronDown } from "lucide-react";
+import { Clock, DollarSign, Users, Scale, Percent, ChevronDown, Send } from "lucide-react";
 import Link from "next/link";
 
 export default function JikyuHanzanPage() {
-  const [hourlyWage, setHourlyWage] = useState<string>("1150"); // デフォルトの時給
-  const [itemPrice, setItemPrice] = useState<string>("5000"); // 商品の価格
+  const [hourlyWage, setHourlyWage] = useState<string>("1150");
+  const [itemPrice, setItemPrice] = useState<string>("5000");
 
   const wageNum = parseFloat(hourlyWage) || 0;
   const priceNum = parseFloat(itemPrice) || 0;
 
-  // 必要な労働時間（時間）の計算
   const totalHours = wageNum > 0 ? priceNum / wageNum : 0;
   const hours = Math.floor(totalHours);
   const minutes = Math.round((totalHours - hours) * 60);
 
-  // Q&Aの開閉状態を管理するアコーディオン用のstate
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -33,8 +31,8 @@ export default function JikyuHanzanPage() {
       a: "計算された分数は、四捨五入して最も近い分単位で分かりやすく表示されます。",
     },
     {
-      q: "入力した時給や価格のデータは保存されますか？",
-      a: "データはすべてお使いのブラウザ内（メモリ上）だけで処理されており、外部のサーバー等に保存されることはありません。",
+      q: "入力したデータは保存されますか？",
+      a: "本ツールに入力された金額等の情報は、お使いのブラウザ上でのみ計算に使用され、サーバーへ送信・保存されることはありません。",
     },
   ];
 
@@ -83,8 +81,6 @@ export default function JikyuHanzanPage() {
 
         {/* メインの計算カード */}
         <main className="flex flex-col gap-6 bg-card rounded-2xl p-6 shadow-sm border">
-          
-          {/* 時給の入力 */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium flex items-center gap-1.5 text-muted-foreground">
               <DollarSign className="size-4" /> あなたの時給（円）
@@ -98,7 +94,6 @@ export default function JikyuHanzanPage() {
             />
           </div>
 
-          {/* 商品価格の入力 */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium flex items-center gap-1.5 text-muted-foreground">
               欲しいものの価格（円）
@@ -114,7 +109,6 @@ export default function JikyuHanzanPage() {
 
           <hr className="border-border my-2" />
 
-          {/* 計算結果表示エリア */}
           <div className="flex flex-col items-center justify-center bg-primary/5 rounded-xl p-6 text-center gap-2 border border-primary/20">
             <span className="text-xs font-bold tracking-wider text-primary uppercase">必要な労働時間</span>
             <div className="text-3xl md:text-4xl font-extrabold text-foreground">
@@ -124,10 +118,9 @@ export default function JikyuHanzanPage() {
               時給 <span className="font-bold">{wageNum.toLocaleString()}円</span> で換算した場合
             </p>
           </div>
-
         </main>
 
-        {/* よくある質問（Q&A）セクション */}
+        {/* よくある質問（Q&A） */}
         <section className="flex flex-col gap-3 mt-4">
           <h2 className="text-sm font-bold text-muted-foreground px-1">よくある質問（Q&A）</h2>
           <div className="flex flex-col gap-2">
@@ -152,14 +145,94 @@ export default function JikyuHanzanPage() {
           </div>
         </section>
 
-        {/* プライバシーポリシーセクション */}
-        <section className="bg-card border rounded-xl p-4 text-xs text-muted-foreground flex flex-col gap-2 shadow-sm mb-6">
-          <h2 className="font-bold text-foreground">プライバシーポリシー</h2>
-          <p>
-            当サイトでは、第三者配信の広告サービス「Google アドセンス」を利用しています[cite: 9]。
-            広告配信事業者は、ユーザーが当サイトや他のウェブサイトに過去にアクセスした際の情報に基づいてパーソナライズ広告を配信するため、Cookieを使用することがあります[cite: 9]。
-          </p>
+        {/* プライバシーポリシー */}
+        <section className="bg-card border rounded-2xl p-6 text-xs text-muted-foreground flex flex-col gap-4 shadow-sm">
+          <h2 className="text-sm font-bold text-foreground">プライバシーポリシー</h2>
+          
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold text-foreground">広告の配信について</h3>
+            <p className="leading-relaxed">
+              当サイトでは、第三者配信の広告サービス「Google アドセンス」を利用しています[cite: 6]。Google などの第三者配信事業者は、Cookie を使用して、ユーザーが当サイトや他のウェブサイトに過去にアクセスした際の情報に基づいて広告を配信します[cite: 6]。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold text-foreground">Cookie の無効化について</h3>
+            <p className="leading-relaxed">
+              Google が広告 Cookie を使用することにより、ユーザーが当サイトや他のサイトにアクセスした際の情報に基づいて、Google やそのパートナーが適切な広告を表示できます[cite: 6]。ユーザーは Google の広告設定（https://adssettings.google.com/）でパーソナライズ広告を無効にできます[cite: 6]。また、www.aboutads.info にアクセスすれば、第三者配信事業者の Cookie を無効にすることもできます[cite: 6]。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold text-foreground">アクセス解析ツールについて</h3>
+            <p className="leading-relaxed">
+              当サイトでは、サービス向上のためにアクセス解析ツールを利用する場合があります[cite: 6]。これらのツールはトラフィックデータの収集のために Cookie を使用しますが、このデータは匿名で収集されており、個人を特定するものではありません[cite: 6]。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold text-foreground">入力データの取り扱い</h3>
+            <p className="leading-relaxed">
+              本ツールに入力された金額や名前などの情報は、お使いのブラウザ上でのみ計算に使用され、サーバーへ送信・保存されることはありません[cite: 6]。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold text-foreground">お問い合わせで取得する個人情報</h3>
+            <p className="leading-relaxed">
+              お問い合わせフォームでご入力いただいたお名前・メールアドレス等は、お問い合わせへの回答のためにのみ利用し、法令に基づく場合を除き第三者に提供することはありません[cite: 6]。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold text-foreground">プライバシーポリシーの変更</h3>
+            <p className="leading-relaxed">
+              当サイトは、必要に応じて本ポリシーの内容を予告なく変更することがあります[cite: 6]。変更後のポリシーは本ページに掲載した時点から効力を生じるものとします[cite: 6]。
+            </p>
+          </div>
         </section>
+
+        {/* お問い合わせフォーム */}
+        <section className="flex flex-col gap-3">
+          <h2 className="text-sm font-bold text-muted-foreground px-1">お問い合わせ</h2>
+          <form className="bg-card border rounded-2xl p-6 shadow-sm flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-foreground">お名前</label>
+              <input
+                type="text"
+                className="w-full rounded-xl border bg-background px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-foreground">メールアドレス</label>
+              <input
+                type="email"
+                className="w-full rounded-xl border bg-background px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-foreground">お問い合わせ内容</label>
+              <textarea
+                rows={4}
+                className="w-full rounded-xl border bg-background px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-colors mt-2"
+            >
+              <Send className="size-3.5" /> 送信する
+            </button>
+          </form>
+        </section>
+
+        {/* フッター＆スポンサーリンク */}
+        <footer className="flex flex-col items-center gap-6 mt-2 mb-6">
+          <p className="text-xs text-muted-foreground">© 時給換算ツール</p>
+          <div className="w-full h-32 border border-dashed border-border rounded-xl flex flex-col items-center justify-center bg-muted/20 text-xs text-muted-foreground">
+            スポンサーリンク
+          </div>
+        </footer>
 
       </div>
     </div>
