@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
-
+import AdBanner from '@/components/AdBanner'
 const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
@@ -47,9 +47,15 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
+      {children}
+
+      {/* 追加：全ページ共通の広告表示 */}
+      <div className="my-8 flex justify-center">
+        <AdBanner />
+      </div>
+
+      {process.env.NODE_ENV === 'production' && <Analytics />}
+    </body>
     </html>
   )
 }
