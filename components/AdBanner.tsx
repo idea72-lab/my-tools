@@ -12,7 +12,7 @@ export default function AdBanner() {
 
     const script = document.createElement('script');
     // ↓ ここを新しく発行されたURLに変更
-    script.src = 'https://adsm.shinobi.jp/s/bfaae45a01ed35ae7afaa98553ddca14';
+    script.src = 'https://adm.shinobi.jp/s/bfaae45a01ed35ae7afaa98553ddca14';
     script.async = true;
 
     bannerRef.current.appendChild(script);
